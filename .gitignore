@@ -1,0 +1,186 @@
+# BorderEye .gitignore
+
+# ============================================================
+# Python
+# ============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# ============================================================
+# Node.js (Dashboard)
+# ============================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# ============================================================
+# IDEs
+# ============================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ============================================================
+# OS
+# ============================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ============================================================
+# Project Specific
+# ============================================================
+
+# Data (large files - don't commit).
+# Written as data/* rather than data/ so git still descends into the tree:
+# an excluded *directory* can never have a file re-included beneath it,
+# which is why the plates_val.json negation below needs each level opened.
+data/*
+!data/anpr/
+data/anpr/*
+# The one exception: 91 plates transcribed by hand for the end-to-end OCR
+# measurement. A few KB, and the only thing under data/ that scripts/
+# cannot rebuild from the raw downloads.
+!data/anpr/plates_val.json
+datasets/
+models/pretrained/
+models/checkpoints/
+
+# Outputs
+outputs/
+logs/
+runs/
+
+# Trained weights ARE versioned — they cost GPU-hours and cannot be
+# regenerated without the datasets. ONNX exports are not: they rebuild
+# from the .pt in seconds via scripts/export_onnx.py.
+models/onnx/
+wandb/
+
+# Demo recordings
+demo_videos/
+demo_recordings/
+final_videos/
+recordings/
+
+# Configuration files with secrets
+.env
+.env.local
+.env.production
+.streamlit/secrets.toml
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.bak
+
+# Docker
+docker-compose.override.yml
+
+# Jupyter
+.ipynb_checkpoints/
+
+# ============================================================
+# ML/DL Specific
+# ============================================================
+*.ckpt
+*.pth
+*.pt
+# ...except the trained detector and plate localizer. They are already
+# tracked, so this rule never hid them — but an untracked one (a re-export,
+# a fresh run promoted into models/weights/) would vanish silently, and a
+# judge cloning the repo would get stock COCO with no sign anything was
+# missing. The negation makes that failure impossible rather than unlikely.
+!models/weights/*.pt
+*.onnx
+*.engine
+*.trt
+*.weights
+*.h5
+*.hdf5
+
+# Training artifacts
+checkpoints/
+wandb/
+mlruns/
+
+# Datasets and training artifacts (regenerate with scripts/)
+data/raw/
+runs/
+
+# Trained weights ARE versioned — they cost GPU-hours and cannot be
+# regenerated without the datasets. ONNX exports are not: they rebuild
+# from the .pt in seconds via scripts/export_onnx.py.
+models/onnx/
+*.log
+
+# Graphify knowledge graph — regenerate with `graphify .`
+graphify-out/

@@ -1,0 +1,113 @@
+# BorderEye Deployment Guide
+
+## 🚀 Deploy to Streamlit Cloud (Recommended - Free)
+
+### Step 1: Go to Streamlit Cloud
+1. Open your browser
+2. Go to **https://share.streamlit.io**
+3. Click **"Sign up"** (use your GitHub account)
+
+### Step 2: Deploy the App
+1. Click **"New app"** button
+2. Fill in the details:
+   - **Repository:** `KRISHNA0R/BorderEye-Border-Intelligence-Video-Analytics-Engine`
+   - **Branch:** `main`
+   - **Main file path:** `web_demo.py`
+3. Click **"Deploy!"**
+
+### Step 3: Wait for Deployment
+- Streamlit will install dependencies automatically
+- Takes about 2-3 minutes
+- You'll get a URL like: `https://your-app-name.streamlit.app`
+
+### Step 4: Share the URL
+- Share the URL with judges
+- Works on any device with a browser
+- No installation needed!
+
+---
+
+## 🖥️ Run Locally (Alternative)
+
+### Option 1: Using the start script
+```bash
+pip install -r requirements.txt
+streamlit run web_demo.py
+```
+
+### Option 2: Using main.py
+```bash
+python main.py dashboard
+```
+
+---
+
+## 📱 Mobile Access
+
+The web demo is mobile-responsive:
+1. Deploy to Streamlit Cloud
+2. Open the URL on your phone
+3. Works great for live demos!
+
+---
+
+## 🔧 Troubleshooting
+
+### If deployment fails:
+1. Check if all files are pushed to GitHub
+2. Ensure `requirements.txt` exists at the repo root
+3. Ensure `web_demo.py` is in the root directory
+4. If the log shows an apt "unmet dependencies" error while processing
+   `packages.txt`, it's a Community Cloud base-image issue, not your repo —
+   trim `packages.txt` to just the apt packages you actually need (e.g.
+   `libgl1`) and avoid `libglib2.0-0`, which currently fails to resolve.
+5. **`packages.txt` must contain ONLY bare package names, one per line —
+   no `#` comments, no blank lines, no punctuation like apostrophes
+   anywhere in the file.** Unlike `requirements.txt` (which pip parses
+   properly), Community Cloud's apt step pipes this file's tokens straight
+   into `xargs apt-get install`: a `#` comment line gets passed as literal
+   package names ("Unable to locate package #"), and a stray `'` anywhere
+   in the file breaks `xargs`' quote parsing for the *entire* file. Put any
+   explanation of why a package is there in this doc instead, not in
+   `packages.txt` itself.
+
+### If the app is slow:
+- Streamlit Cloud free tier has limited resources
+- For better performance, consider:
+  - Streamlit Cloud Pro ($10/month)
+  - Render.com (free tier available)
+  - Railway.app (free tier available)
+
+---
+
+## 🌐 Alternative Deployment Options
+
+### Render.com (Free)
+1. Go to https://render.com
+2. Create a new "Web Service"
+3. Connect GitHub repo
+4. Set build command: `pip install -r requirements.txt`
+5. Set start command: `streamlit run web_demo.py --server.port $PORT`
+
+### Railway.app (Free)
+1. Go to https://railway.app
+2. Create a new project
+3. Add a service from GitHub
+4. Railway auto-detects Streamlit
+
+---
+
+## 📋 Pre-Deployment Checklist
+
+- [x] GitHub repo created: `KRISHNA0R/BorderEye-Border-Intelligence-Video-Analytics-Engine`
+- [x] All code committed and pushed
+- [x] `web_demo.py` in root directory
+- [x] `requirements.txt` exists
+- [x] `.streamlit/config.toml` exists
+- [ ] Deploy to Streamlit Cloud
+- [ ] Test the deployed app
+- [ ] Share URL with team
+
+---
+
+*Last Updated: 2026-08-29*

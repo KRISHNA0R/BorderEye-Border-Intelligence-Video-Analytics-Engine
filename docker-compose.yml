@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  dashboard:
+    build: .
+    command: python main.py dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - BORDEREYE_MODE=dashboard
+
+  api:
+    build: .
+    command: python main.py server --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - BORDEREYE_MODE=server

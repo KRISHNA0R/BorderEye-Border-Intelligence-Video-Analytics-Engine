@@ -1,0 +1,41 @@
+# BorderEye — dependencies for the hosted Streamlit demo and the core app.
+#
+# The PyTorch CPU index is what makes this fit a free hosting tier: the
+# default PyPI `torch` wheel bundles CUDA libraries and lands around 2.5GB,
+# while the CPU build is ~183MB. PEP 440 orders the local version `+cpu`
+# above the plain release, so with this extra index pip resolves to the CPU
+# wheel without needing an exact pin.
+#
+# Installing CUDA torch locally for GPU training: install it explicitly
+# first, so this file's resolution doesn't override it —
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+#   pip install -r requirements-ml.txt
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# Core
+# OpenCV is pinned below 5.0 deliberately: OpenCV 5 removed HOGDescriptor
+# (and CascadeClassifier), which the demo's no-torch fallback path uses.
+numpy>=1.24.0
+opencv-python-headless>=4.8.0,<5.0
+# ultralytics requires bare `opencv-python` with no upper bound, so without
+# this second pin pip resolves opencv-python 5.0 alongside the headless 4.x
+# above. Both install into the same cv2/ package, and OpenCV 5 is exactly the
+# release that dropped HOGDescriptor. Pinning only the headless name is not
+# enough -- the constraint has to name the package ultralytics actually asks for.
+opencv-python<5.0
+
+# Detection — src/edge/detector.py, web_demo.py
+ultralytics>=8.0.0
+torch>=2.0.0
+torchvision>=0.15.0
+
+# OCR / ANPR — src/edge/anpr.py (degrades gracefully if unavailable)
+easyocr>=1.7.0
+
+# Dashboard
+streamlit>=1.28.0
+
+# Backend
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6

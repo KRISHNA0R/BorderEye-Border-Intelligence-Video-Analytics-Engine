@@ -1,0 +1,16 @@
+# BorderEye — dataset preparation and test dependencies.
+#
+# requirements.txt already carries torch/ultralytics/easyocr, since the
+# hosted demo runs real detection. This file adds what only local dataset
+# work and the test suite need.
+#
+#   pip install -r requirements-ml.txt
+#
+# -r pulls in the core set, so this file alone is enough.
+-r requirements.txt
+
+# Dataset augmentation — scripts/anpr_augmentation.py
+albumentations>=1.3.0
+
+# Tests
+pytest>=7.4.0
